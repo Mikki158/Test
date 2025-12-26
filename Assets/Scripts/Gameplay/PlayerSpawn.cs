@@ -15,7 +15,7 @@ namespace Platformer.Gameplay
         {
             var player = model.player;
             player.collider2d.enabled = true;
-            player.controlEnabled = false;
+            //player.controlEnabled = false;
             if (player.audioSource && player.respawnAudio)
                 player.audioSource.PlayOneShot(player.respawnAudio);
             player.health.Increment();
@@ -24,7 +24,7 @@ namespace Platformer.Gameplay
             player.animator.SetBool("dead", false);
             model.virtualCamera.Follow = player.transform;
             model.virtualCamera.LookAt = player.transform;
-            Simulation.Schedule<EnablePlayerInput>(2f);
+            Simulation.Schedule<EnablePlayerInput>(0.5f);
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Platformer.Mechanics
                         }
                         else
                         {
-                            token.frame = (token.frame + 1) % token.sprites.Length;
+                            //token.frame = (token.frame + 1) % token.sprites.Length;
                         }
                     }
                 }

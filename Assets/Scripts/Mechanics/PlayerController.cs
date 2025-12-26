@@ -54,6 +54,8 @@ namespace Platformer.Mechanics
         IceSurface currentIce;
         float iceSpeed;
 
+        WindZone currentWind;
+
         void Awake()
         {
             health = GetComponent<Health>();
@@ -170,6 +172,31 @@ namespace Platformer.Mechanics
             {
                 targetVelocity = move * maxSpeed * speedMultiplier;
             }
+
+            if (currentWind != null)
+            {
+                targetVelocity += currentWind.WindForce;
+            }
+        }
+
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+            var wind = collision.GetComponent<WindZone>();
+            if (wind != null)
+            {
+                Debug.Log("Entered Wind Zone");
+                currentWind = wind;
+            }
+        }
+
+        void OnTriggerExit2D(Collider2D collision)
+        {
+            var wind = collision.GetComponent<WindZone>();
+            if (wind != null && wind == currentWind)
+            {
+                Debug.Log("Exited Wind Zone");
+                currentWind = null;
+            }
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -177,8 +204,16 @@ namespace Platformer.Mechanics
             var ice = collision.collider.GetComponent<IceSurface>();
             if (ice != null)
             {
+                Debug.Log("ice");
                 currentIce = ice;
             }
+
+            //var wind = collision.collider.GetComponent<WindZone>();
+            //if (wind != null)
+            //{
+            //    Debug.Log("---");
+            //    currentWind = wind;
+            //}
         }
 
         void OnCollisionExit2D(Collision2D collision)
@@ -189,6 +224,12 @@ namespace Platformer.Mechanics
                 currentIce = null;
                 iceSpeed = 0f;
             }
+
+            //var wind = collision.collider.GetComponent<WindZone>();
+            //if (wind != null && wind == currentWind)
+            //{
+            //    currentWind = null;
+            //}
         }
 
         public enum JumpState

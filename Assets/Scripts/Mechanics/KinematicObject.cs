@@ -78,7 +78,13 @@ namespace Platformer.Mechanics
 
         protected virtual void OnDisable()
         {
-            body.bodyType = RigidbodyType2D.Dynamic;
+            try
+            {
+                body.bodyType = RigidbodyType2D.Dynamic;
+            } catch
+            {
+
+            }
         }
 
         protected virtual void Start()
