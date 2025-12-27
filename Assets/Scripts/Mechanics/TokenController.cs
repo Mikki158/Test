@@ -29,9 +29,10 @@ namespace Platformer.Mechanics
         void FindAllTokensInScene()
         {
             tokens = UnityEngine.Object.FindObjectsByType<TokenInstance>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-            textScore.text = score.ToString() + " / " + tokens.Length;
-
-            human2.SetActive(false);
+            if (tokens.Length > 0)
+                textScore.text = score.ToString() + " / " + tokens.Length;
+            if (human2 != null)
+                human2.SetActive(false);
         }
 
         void Awake()
