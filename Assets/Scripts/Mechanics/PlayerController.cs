@@ -38,11 +38,13 @@ namespace Platformer.Mechanics
         public AudioSource audioSource;
         public Health health;
         public bool controlEnabled = true;
+        public bool canMove = true;
 
         bool jump;
         Vector2 move;
         SpriteRenderer spriteRenderer;
         internal Animator animator;
+        internal Rigidbody2D rigidbody2d;
         readonly PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
         private InputAction m_MoveAction;
@@ -63,6 +65,7 @@ namespace Platformer.Mechanics
             collider2d = GetComponent<Collider2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+            rigidbody2d = GetComponent<Rigidbody2D>();
 
             m_MoveAction = InputSystem.actions.FindAction("Player/Move");
             m_JumpAction = InputSystem.actions.FindAction("Player/Jump");
@@ -73,6 +76,11 @@ namespace Platformer.Mechanics
 
         protected override void Update()
         {
+            if (!canMove)
+            {
+                velocity = Vector2.zero;
+                return;
+            }
             if (controlEnabled)
             {
                 move.x = m_MoveAction.ReadValue<Vector2>().x;

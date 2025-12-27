@@ -20,12 +20,18 @@ namespace Platformer.Mechanics
         public int score = 0;
         public TextMeshProUGUI textScore;
 
+        public GameObject human1;
+        public GameObject human2;
+
         float nextFrameTime = 0;
 
         [ContextMenu("Find All Tokens")]
         void FindAllTokensInScene()
         {
             tokens = UnityEngine.Object.FindObjectsByType<TokenInstance>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+            textScore.text = score.ToString() + " / " + tokens.Length;
+
+            human2.SetActive(false);
         }
 
         void Awake()
@@ -62,7 +68,12 @@ namespace Platformer.Mechanics
                             token.gameObject.SetActive(false);
                             tokens[i] = null;
                             score++;
-                            textScore.text = score.ToString();
+                            textScore.text = score.ToString() + " / " + tokens.Length;
+                            if (score == tokens.Length)
+                            {
+                                human1.SetActive(false);
+                                human2.SetActive(true);
+                            }
                         }
                         else
                         {

@@ -3,9 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
-using static UnityEditor.Rendering.MaterialUpgrader;
 
 public class DialogueManager2D : MonoBehaviour
 {
@@ -115,7 +112,7 @@ public class DialogueManager2D : MonoBehaviour
         dialoguePanel.SetActive(false);
         Time.timeScale = 1f;
         currentLine = -1;
-        //StartCoroutine(NextLevel());
+        StartCoroutine(NextLevel());
         StartCoroutine(ResetJustClosed());
     }
 
@@ -123,10 +120,10 @@ public class DialogueManager2D : MonoBehaviour
     {
         yield return null;
         justClosed = false;
-        if (DialogueNPC.endLevel)
-        {
-            SceneManager.LoadScene(DialogueNPC.nextLevel);
-        }
+        //if (DialogueNPC.endLevel)
+        //{
+        //    SceneManager.LoadScene(DialogueNPC.nextLevel);
+        //}
     }
 
     IEnumerator NextLevel()

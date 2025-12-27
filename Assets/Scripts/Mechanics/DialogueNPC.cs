@@ -1,3 +1,4 @@
+using Platformer.Mechanics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -14,11 +15,18 @@ public class DialogueNPC : MonoBehaviour
     public string nextLevel;
 
     private bool playerInRange = false;
+    public PlayerController player;
+
+    //private void Awake()
+    //{
+    //    player = GetComponent<PlayerController>();
+    //}
 
     void Start()
     {
         interactHint.SetActive(false);
         dialoguePanel.SetActive(false);
+        
     }
 
     void Update()
@@ -37,6 +45,7 @@ public class DialogueNPC : MonoBehaviour
 
     void OpenDialogue()
     {
+        player.canMove = false;
         dialogueManager.StartDialogue(dialogueData, this);
     }
 
@@ -44,6 +53,7 @@ public class DialogueNPC : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
         Time.timeScale = 1f;
+        player.canMove = true;
         Debug.Log("Конец");
         if (endLevel)
         {
